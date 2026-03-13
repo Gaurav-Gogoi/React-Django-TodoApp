@@ -22,9 +22,9 @@ function Form({ route, method }) {
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-        navigate("/"); // redirect after login
+        navigate("/");
       } else {
-        navigate("/login"); // redirect after register
+        navigate("/login");
       }
     } catch (error) {
       if (error.response) {
@@ -64,7 +64,12 @@ function Form({ route, method }) {
         className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      {loading && <LoadingIndicator />}
+      {/* Center the loading indicator */}
+      {loading && (
+        <div className="flex justify-center">
+          <LoadingIndicator />
+        </div>
+      )}
 
       <button
         type="submit"
