@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/Form.css";
 import LoadingIndicator from "./LoadingIndicator";
+import { Link } from "react-router-dom";
 
 function Form({ route, method }) {
   const [username, setUsername] = useState("");
@@ -45,7 +46,7 @@ function Form({ route, method }) {
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <h1>{name}</h1>
-
+  
       <input
         className="form-input"
         type="text"
@@ -54,7 +55,7 @@ function Form({ route, method }) {
         placeholder="Username"
         required
       />
-
+  
       <input
         className="form-input"
         type="password"
@@ -63,12 +64,22 @@ function Form({ route, method }) {
         placeholder="Password"
         required
       />
-
+  
       {loading && <LoadingIndicator/>}
-
+  
       <button className="form-button" type="submit" disabled={loading}>
         {loading ? "Loading..." : name}
       </button>
+  
+      {method === "login" ? (
+        <p>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      ) : (
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      )}
     </form>
   );
 }
