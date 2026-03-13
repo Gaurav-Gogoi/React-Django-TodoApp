@@ -8,6 +8,8 @@ import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
+
 function Logout() {
   localStorage.clear();
   return <Navigate to="login" />;
@@ -20,6 +22,7 @@ function RegisterAndLogout() {
 
 function App() {
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
-import "../styles/Form.css";
 import LoadingIndicator from "./LoadingIndicator";
-import { Link } from "react-router-dom";
 
 function Form({ route, method }) {
   const [username, setUsername] = useState("");
@@ -15,7 +13,7 @@ function Form({ route, method }) {
   const name = method === "login" ? "Login" : "Register";
 
   const handleSubmit = async (e) => {
-    e.preventDefault();   // prevent page refresh
+    e.preventDefault();
     setLoading(true);
 
     try {
@@ -24,12 +22,10 @@ function Form({ route, method }) {
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-
         navigate("/"); // redirect after login
       } else {
         navigate("/login"); // redirect after register
       }
-
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
@@ -44,40 +40,55 @@ function Form({ route, method }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
-      <h1>{name}</h1>
-  
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto mt-16 p-6 bg-white shadow-lg rounded-lg flex flex-col gap-4"
+    >
+      <h1 className="text-2xl font-bold text-center text-gray-800">{name}</h1>
+
       <input
-        className="form-input"
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
         required
+        className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-  
+
       <input
-        className="form-input"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-  
-      {loading && <LoadingIndicator/>}
-  
-      <button className="form-button" type="submit" disabled={loading}>
+
+      {loading && <LoadingIndicator />}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className={`w-full py-2 rounded text-white font-semibold transition-colors duration-200
+          ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}
+        `}
+      >
         {loading ? "Loading..." : name}
       </button>
-  
+
       {method === "login" ? (
-        <p>
-          Don't have an account? <Link to="/register">Register</Link>
+        <p className="text-center text-gray-600">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-500 hover:text-blue-700 font-medium">
+            Register
+          </Link>
         </p>
       ) : (
-        <p>
-          Already have an account? <Link to="/login">Login</Link>
+        <p className="text-center text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500 hover:text-blue-700 font-medium">
+            Login
+          </Link>
         </p>
       )}
     </form>

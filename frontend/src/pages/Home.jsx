@@ -50,39 +50,60 @@ function Home() {
   };
 
   return (
-    <div>
-      <div>
-        <h2>Notes</h2>
-        {notes.map((note) => (
-          <Note note={note} onDelete={deleteNote} key={note.id} />
-        ))}
+    <div className="min-h-screen bg-gray-100 p-8">
+      
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        My Notes
+      </h1>
+  
+      <div className="grid md:grid-cols-2 gap-8">
+  
+        {/* Notes Section */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Your Notes</h2>
+  
+          <div className="space-y-3">
+            {notes.map((note) => (
+              <Note note={note} onDelete={deleteNote} key={note.id} />
+            ))}
+          </div>
+        </div>
+  
+        {/* Create Note */}
+        <div className="bg-white p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-semibold mb-4">
+            Create Note
+          </h2>
+  
+          <form onSubmit={createNote} className="space-y-4">
+  
+            <input
+              type="text"
+              placeholder="Title"
+              className="w-full border p-3 rounded-lg"
+              required
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+            />
+  
+            <textarea
+              placeholder="Write your note..."
+              className="w-full border p-3 rounded-lg"
+              required
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            ></textarea>
+  
+            <button
+              className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
+            >
+              Create Note
+            </button>
+  
+          </form>
+        </div>
+  
       </div>
-      <h2>Create a Notes</h2>
-      <form onSubmit={createNote}>
-        <label htmlFor="title">Title:</label>
-        <br />
-        <input
-          type="text"
-          id="title"
-          name="title"
-          required
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-        />
-
-        <label htmlFor="content"> Content :</label>
-        <br />
-        <textarea
-          name="content"
-          id="content"
-          required
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-        <br />
-
-        <input type="submit" value="submit"></input>
-      </form>
     </div>
   );
 }
