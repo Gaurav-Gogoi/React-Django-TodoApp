@@ -66,8 +66,12 @@ function Form({ route, method }) {
 
       {/* Center the loading indicator */}
       {loading && (
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-5">
           <LoadingIndicator />
+          <p className="text-gray-500 text-sm animate-pulse">
+  Please wait, server is waking up...
+</p>
+          
         </div>
       )}
 
